@@ -1,1 +1,1 @@
-`php artisan queue:work database --queue=high,default`
+`php artisan queue:work database --tries=3 --queue=high,default`

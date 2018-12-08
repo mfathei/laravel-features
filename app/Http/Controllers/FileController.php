@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Intervention\Image\ImageManager;
 
 class FileController extends Controller
 {
@@ -18,6 +19,9 @@ class FileController extends Controller
     public function store(Request $request)
     {
         $file = $request->file('file')->store('uploads');
-        var_dump($file);
+//        dd(storage_path('app/' . $file));
+        $image = (new ImageManager)->make(storage_path('app/'. $file));
+        $image->insert(public_path('image/laravel.png'));
+        $image->save();
     }
 }

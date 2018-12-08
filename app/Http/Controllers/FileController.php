@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\DrawImageWatermark;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManager;
 
@@ -19,9 +20,6 @@ class FileController extends Controller
     public function store(Request $request)
     {
         $file = $request->file('file')->store('uploads');
-//        dd(storage_path('app/' . $file));
-        $image = (new ImageManager)->make(storage_path('app/'. $file));
-        $image->insert(public_path('image/laravel.png'));
-        $image->save();
+        $this->dispatch(new DrawImageWatermark($file));
     }
 }

@@ -11,6 +11,5 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'FileController@index');
+Route::post('/store', 'FileController@store')->name('file.store');

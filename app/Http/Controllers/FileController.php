@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Jobs\DrawImageWatermark;
 use Illuminate\Http\Request;
-use Intervention\Image\ImageManager;
 
 class FileController extends Controller
 {
@@ -20,6 +19,8 @@ class FileController extends Controller
     public function store(Request $request)
     {
         $file = $request->file('file')->store('uploads');
-        $this->dispatch(new DrawImageWatermark($file));
+//        dd($file);
+        $job = new DrawImageWatermark($file);
+        $this->dispatch($job->onQueue('high'));
     }
 }
